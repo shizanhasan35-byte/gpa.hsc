@@ -1,0 +1,1378 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>HSC GPA Calculator</title>
+
+<style>
+
+/* =========================
+   BASIC DESIGN
+========================= */
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+body{
+  min-height:100vh;
+  font-family:Arial, sans-serif;
+
+  background:
+  linear-gradient(
+  135deg,
+  #090979,
+  #4b2aad,
+  #d62976
+  );
+
+  padding:25px 15px;
+}
+
+
+/* =========================
+   MAIN CONTAINER
+========================= */
+
+.container{
+  width:100%;
+  max-width:760px;
+  margin:auto;
+}
+
+
+/* =========================
+   DEVELOPER NAME
+========================= */
+
+.developer{
+
+  text-align:center;
+
+  color:white;
+
+  font-size:15px;
+
+  letter-spacing:1px;
+
+  margin-bottom:15px;
+
+  opacity:.95;
+
+}
+
+.developer span{
+
+  font-weight:bold;
+
+  color:#facc15;
+
+}
+
+
+/* =========================
+   HEADER
+========================= */
+
+.header{
+
+  text-align:center;
+
+  color:white;
+
+  margin-bottom:25px;
+
+}
+
+.icon{
+
+  width:85px;
+
+  height:85px;
+
+  margin:auto;
+
+  margin-bottom:15px;
+
+  display:flex;
+
+  justify-content:center;
+
+  align-items:center;
+
+  font-size:42px;
+
+  border-radius:50%;
+
+  background:
+
+  rgba(
+  255,
+  255,
+  255,
+  .18
+  );
+
+  border:
+
+  2px solid
+
+  rgba(
+  255,
+  255,
+  255,
+  .35
+  );
+
+  backdrop-filter:
+
+  blur(10px);
+
+  box-shadow:
+
+  0 10px 30px
+
+  rgba(
+  0,
+  0,
+  0,
+  .2
+  );
+
+}
+
+.header h1{
+
+  font-size:34px;
+
+  margin-bottom:8px;
+
+}
+
+.header p{
+
+  font-size:16px;
+
+  opacity:.9;
+
+}
+
+
+/* =========================
+   CALCULATOR BOX
+========================= */
+
+.calculator{
+
+  background:
+
+  rgba(
+  255,
+  255,
+  255,
+  .96
+  );
+
+  border-radius:28px;
+
+  padding:28px;
+
+  box-shadow:
+
+  0 25px 60px
+
+  rgba(
+  0,
+  0,
+  0,
+  .30
+  );
+
+}
+
+
+/* =========================
+   SUBJECT GRID
+========================= */
+
+.subject-grid{
+
+  display:grid;
+
+  grid-template-columns:
+
+  1fr 1fr;
+
+  gap:17px;
+
+}
+
+
+/* =========================
+   SUBJECT CARD
+========================= */
+
+.subject{
+
+  background:
+
+  linear-gradient(
+
+  135deg,
+
+  #f5f3ff,
+
+  #eff6ff
+
+  );
+
+  padding:17px;
+
+  border-radius:18px;
+
+  border:
+
+  2px solid
+
+  transparent;
+
+  transition:.3s;
+
+}
+
+.subject:hover{
+
+  transform:
+
+  translateY(-4px);
+
+  border-color:
+
+  #7c3aed;
+
+  box-shadow:
+
+  0 10px 25px
+
+  rgba(
+  124,
+  58,
+  237,
+  .18
+  );
+
+}
+
+.subject label{
+
+  display:block;
+
+  font-size:16px;
+
+  font-weight:bold;
+
+  color:#312e81;
+
+  margin-bottom:10px;
+
+}
+
+.subject select{
+
+  width:100%;
+
+  padding:12px;
+
+  border:none;
+
+  outline:none;
+
+  border-radius:11px;
+
+  background:white;
+
+  color:#222;
+
+  font-size:16px;
+
+  cursor:pointer;
+
+  box-shadow:
+
+  0 3px 10px
+
+  rgba(
+  0,
+  0,
+  0,
+  .08
+  );
+
+}
+
+
+/* =========================
+   OPTIONAL SUBJECT
+========================= */
+
+.optional{
+
+  grid-column:
+
+  1 / 3;
+
+  background:
+
+  linear-gradient(
+
+  135deg,
+
+  #fff7ed,
+
+  #fef3c7
+
+  );
+
+  border:
+
+  2px solid
+
+  #fbbf24;
+
+}
+
+.optional label{
+
+  color:#92400e;
+
+}
+
+
+/* =========================
+   BUTTON
+========================= */
+
+button{
+
+  width:100%;
+
+  margin-top:25px;
+
+  padding:17px;
+
+  border:none;
+
+  border-radius:16px;
+
+  color:white;
+
+  font-size:19px;
+
+  font-weight:bold;
+
+  cursor:pointer;
+
+  background:
+
+  linear-gradient(
+
+  90deg,
+
+  #4f46e5,
+
+  #7c3aed,
+
+  #db2777
+
+  );
+
+  transition:.3s;
+
+}
+
+button:hover{
+
+  transform:
+
+  scale(1.02);
+
+  box-shadow:
+
+  0 12px 30px
+
+  rgba(
+  124,
+  58,
+  237,
+  .45
+  );
+
+}
+
+button:active{
+
+  transform:
+
+  scale(.98);
+
+}
+
+
+/* =========================
+   RESULT BOX
+========================= */
+
+.result{
+
+  display:none;
+
+  margin-top:25px;
+
+  padding:25px;
+
+  text-align:center;
+
+  border-radius:20px;
+
+  animation:
+
+  resultShow
+
+  .5s ease;
+
+}
+
+.result h2{
+
+  font-size:22px;
+
+  margin-bottom:10px;
+
+}
+
+.gpa{
+
+  font-size:55px;
+
+  font-weight:bold;
+
+}
+
+.message{
+
+  font-size:17px;
+
+  margin-top:8px;
+
+}
+
+.success{
+
+  color:#166534;
+
+  background:
+
+  linear-gradient(
+
+  135deg,
+
+  #dcfce7,
+
+  #bbf7d0
+
+  );
+
+}
+
+.fail{
+
+  color:#991b1b;
+
+  background:
+
+  linear-gradient(
+
+  135deg,
+
+  #fee2e2,
+
+  #fecaca
+
+  );
+
+}
+
+@keyframes resultShow{
+
+  from{
+
+  opacity:0;
+
+  transform:
+
+  translateY(20px);
+
+  }
+
+  to{
+
+  opacity:1;
+
+  transform:
+
+  translateY(0);
+
+  }
+
+}
+
+
+/* =========================
+   FOOTER
+========================= */
+
+.footer{
+
+  text-align:center;
+
+  color:white;
+
+  margin-top:22px;
+
+  font-size:14px;
+
+  opacity:.9;
+
+}
+
+
+/* =========================
+   MOBILE DESIGN
+========================= */
+
+@media(
+
+max-width:600px
+
+){
+
+  .subject-grid{
+
+  grid-template-columns:
+
+  1fr;
+
+  }
+
+  .optional{
+
+  grid-column:
+
+  auto;
+
+  }
+
+  .header h1{
+
+  font-size:27px;
+
+  }
+
+  .calculator{
+
+  padding:18px;
+
+  }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+
+<div class="container">
+
+
+<!-- DEVELOPER NAME -->
+
+<div class="developer">
+
+Developed by
+
+<span>
+
+Shajed Hasan
+
+</span>
+
+</div>
+
+
+<!-- HEADER -->
+
+<div class="header">
+
+<div class="icon">
+
+🎓
+
+</div>
+
+<h1>
+
+HSC GPA Calculator
+
+</h1>
+
+<p>
+
+আপনার গ্রেড নির্বাচন করে GPA হিসাব করুন
+
+</p>
+
+</div>
+
+
+<!-- CALCULATOR -->
+
+<div class="calculator">
+
+
+<div class="subject-grid">
+
+
+<!-- BANGLA -->
+
+<div class="subject">
+
+<label>
+
+📖 বাংলা
+
+</label>
+
+<select class="grade">
+
+<option value="5">
+
+A+ — 5.00
+
+</option>
+
+<option value="4">
+
+A — 4.00
+
+</option>
+
+<option value="3.5">
+
+A- — 3.50
+
+</option>
+
+<option value="3">
+
+B — 3.00
+
+</option>
+
+<option value="2">
+
+C — 2.00
+
+</option>
+
+<option value="1">
+
+D — 1.00
+
+</option>
+
+<option value="0">
+
+F — 0.00
+
+</option>
+
+</select>
+
+</div>
+
+
+<!-- ENGLISH -->
+
+<div class="subject">
+
+<label>
+
+🌍 ইংরেজি
+
+</label>
+
+<select class="grade">
+
+<option value="5">
+
+A+ — 5.00
+
+</option>
+
+<option value="4">
+
+A — 4.00
+
+</option>
+
+<option value="3.5">
+
+A- — 3.50
+
+</option>
+
+<option value="3">
+
+B — 3.00
+
+</option>
+
+<option value="2">
+
+C — 2.00
+
+</option>
+
+<option value="1">
+
+D — 1.00
+
+</option>
+
+<option value="0">
+
+F — 0.00
+
+</option>
+
+</select>
+
+</div>
+
+
+<!-- PHYSICS -->
+
+<div class="subject">
+
+<label>
+
+⚛️ পদার্থবিজ্ঞান
+
+</label>
+
+<select class="grade">
+
+<option value="5">
+
+A+ — 5.00
+
+</option>
+
+<option value="4">
+
+A — 4.00
+
+</option>
+
+<option value="3.5">
+
+A- — 3.50
+
+</option>
+
+<option value="3">
+
+B — 3.00
+
+</option>
+
+<option value="2">
+
+C — 2.00
+
+</option>
+
+<option value="1">
+
+D — 1.00
+
+</option>
+
+<option value="0">
+
+F — 0.00
+
+</option>
+
+</select>
+
+</div>
+
+
+<!-- CHEMISTRY -->
+
+<div class="subject">
+
+<label>
+
+🧪 রসায়ন
+
+</label>
+
+<select class="grade">
+
+<option value="5">
+
+A+ — 5.00
+
+</option>
+
+<option value="4">
+
+A — 4.00
+
+</option>
+
+<option value="3.5">
+
+A- — 3.50
+
+</option>
+
+<option value="3">
+
+B — 3.00
+
+</option>
+
+<option value="2">
+
+C — 2.00
+
+</option>
+
+<option value="1">
+
+D — 1.00
+
+</option>
+
+<option value="0">
+
+F — 0.00
+
+</option>
+
+</select>
+
+</div>
+
+
+<!-- MATH -->
+
+<div class="subject">
+
+<label>
+
+📐 উচ্চতর গণিত
+
+</label>
+
+<select class="grade">
+
+<option value="5">
+
+A+ — 5.00
+
+</option>
+
+<option value="4">
+
+A — 4.00
+
+</option>
+
+<option value="3.5">
+
+A- — 3.50
+
+</option>
+
+<option value="3">
+
+B — 3.00
+
+</option>
+
+<option value="2">
+
+C — 2.00
+
+</option>
+
+<option value="1">
+
+D — 1.00
+
+</option>
+
+<option value="0">
+
+F — 0.00
+
+</option>
+
+</select>
+
+</div>
+
+
+<!-- BIOLOGY -->
+
+<div class="subject">
+
+<label>
+
+🧬 জীববিজ্ঞান
+
+</label>
+
+<select class="grade">
+
+<option value="5">
+
+A+ — 5.00
+
+</option>
+
+<option value="4">
+
+A — 4.00
+
+</option>
+
+<option value="3.5">
+
+A- — 3.50
+
+</option>
+
+<option value="3">
+
+B — 3.00
+
+</option>
+
+<option value="2">
+
+C — 2.00
+
+</option>
+
+<option value="1">
+
+D — 1.00
+
+</option>
+
+<option value="0">
+
+F — 0.00
+
+</option>
+
+</select>
+
+</div>
+
+
+<!-- OPTIONAL SUBJECT -->
+
+<div class="subject optional">
+
+<label>
+
+⭐ ৪র্থ বিষয় / ঐচ্ছিক বিষয়
+
+</label>
+
+<select id="optionalGrade">
+
+<option value="5">
+
+A+ — 5.00
+
+</option>
+
+<option value="4">
+
+A — 4.00
+
+</option>
+
+<option value="3.5">
+
+A- — 3.50
+
+</option>
+
+<option value="3">
+
+B — 3.00
+
+</option>
+
+<option value="2">
+
+C — 2.00
+
+</option>
+
+<option value="1">
+
+D — 1.00
+
+</option>
+
+<option value="0">
+
+F — 0.00
+
+</option>
+
+</select>
+
+</div>
+
+
+</div>
+
+
+<!-- BUTTON -->
+
+<button onclick="calculateGPA()">
+
+✨ GPA CALCULATE করুন
+
+</button>
+
+
+<!-- RESULT -->
+
+<div
+
+id="result"
+
+class="result"
+
+>
+
+<h2>
+
+আপনার GPA
+
+</h2>
+
+<div
+
+id="gpa"
+
+class="gpa"
+
+>
+
+</div>
+
+<p
+
+id="message"
+
+class="message"
+
+>
+
+</p>
+
+</div>
+
+
+</div>
+
+
+<!-- FOOTER -->
+
+<div class="footer">
+
+© 2026 HSC GPA Calculator
+
+<br>
+
+Developed by Shajed Hasan
+
+</div>
+
+
+</div>
+
+
+<script>
+
+
+function calculateGPA(){
+
+
+let grades =
+
+document.querySelectorAll(
+
+".grade"
+
+);
+
+
+let optionalGrade =
+
+Number(
+
+document.getElementById(
+
+"optionalGrade"
+
+).value
+
+);
+
+
+let total = 0;
+
+
+let result =
+
+document.getElementById(
+
+"result"
+
+);
+
+
+let gpaText =
+
+document.getElementById(
+
+"gpa"
+
+);
+
+
+let message =
+
+document.getElementById(
+
+"message"
+
+);
+
+
+/* CHECK MAIN SUBJECT */
+
+
+for(
+
+let i = 0;
+
+i < grades.length;
+
+i++
+
+){
+
+
+let value =
+
+Number(
+
+grades[i].value
+
+);
+
+
+/* MAIN SUBJECT F */
+
+
+if(
+
+value === 0
+
+){
+
+
+result.style.display =
+
+"block";
+
+
+result.className =
+
+"result fail";
+
+
+gpaText.innerHTML =
+
+"F ❌";
+
+
+message.innerHTML =
+
+"মূল বিষয়ে F আছে";
+
+return;
+
+}
+
+
+total += value;
+
+
+}
+
+
+/* OPTIONAL BONUS */
+
+
+let optionalBonus =
+
+Math.max(
+
+0,
+
+optionalGrade - 2
+
+);
+
+
+/* FINAL GPA */
+
+
+let gpa =
+
+(
+
+total +
+
+optionalBonus
+
+)
+
+/
+
+grades.length;
+
+
+/* MAX GPA 5 */
+
+
+if(
+
+gpa > 5
+
+){
+
+gpa = 5;
+
+}
+
+
+/* SHOW RESULT */
+
+
+result.style.display =
+
+"block";
+
+
+result.className =
+
+"result success";
+
+
+gpaText.innerHTML =
+
+gpa.toFixed(2);
+
+
+/* RESULT MESSAGE */
+
+
+if(
+
+gpa === 5
+
+){
+
+message.innerHTML =
+
+"🎉 অসাধারণ! আপনি GPA 5.00 পেয়েছেন";
+
+}
+
+
+else if(
+
+gpa >= 4
+
+){
+
+message.innerHTML =
+
+"🌟 খুব ভালো ফলাফল!";
+
+}
+
+
+else if(
+
+gpa >= 3
+
+){
+
+message.innerHTML =
+
+"👏 ভালো করেছেন!";
+
+}
+
+
+else{
+
+message.innerHTML =
+
+"📚 আরও চেষ্টা করলে ভালো হবে";
+
+}
+
+
+}
+
+
+</script>
+
+
+</body>
+
+</html>
