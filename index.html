@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="bn">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,1372 +7,609 @@
 <title>HSC GPA Calculator</title>
 
 <style>
-
-/* =========================
-   BASIC DESIGN
-========================= */
-
 *{
   margin:0;
   padding:0;
   box-sizing:border-box;
+  font-family:Arial, sans-serif;
 }
 
 body{
   min-height:100vh;
-  font-family:Arial, sans-serif;
-
   background:
-  linear-gradient(
-  135deg,
-  #090979,
-  #4b2aad,
-  #d62976
-  );
-
+  radial-gradient(circle at top left, #4f46e5, transparent 35%),
+  radial-gradient(circle at bottom right, #06b6d4, transparent 35%),
+  linear-gradient(135deg,#0f172a,#111827);
+  color:white;
   padding:25px 15px;
 }
 
-
-/* =========================
-   MAIN CONTAINER
-========================= */
-
 .container{
   width:100%;
-  max-width:760px;
+  max-width:850px;
   margin:auto;
 }
-
-
-/* =========================
-   DEVELOPER NAME
-========================= */
-
-.developer{
-
-  text-align:center;
-
-  color:white;
-
-  font-size:15px;
-
-  letter-spacing:1px;
-
-  margin-bottom:15px;
-
-  opacity:.95;
-
-}
-
-.developer span{
-
-  font-weight:bold;
-
-  color:#facc15;
-
-}
-
-
-/* =========================
-   HEADER
-========================= */
 
 .header{
-
   text-align:center;
-
-  color:white;
-
   margin-bottom:25px;
-
 }
 
-.icon{
-
-  width:85px;
-
-  height:85px;
-
-  margin:auto;
-
-  margin-bottom:15px;
-
-  display:flex;
-
-  justify-content:center;
-
-  align-items:center;
-
-  font-size:42px;
-
+.logo{
+  width:75px;
+  height:75px;
+  margin:auto auto 12px;
   border-radius:50%;
-
-  background:
-
-  rgba(
-  255,
-  255,
-  255,
-  .18
-  );
-
-  border:
-
-  2px solid
-
-  rgba(
-  255,
-  255,
-  255,
-  .35
-  );
-
-  backdrop-filter:
-
-  blur(10px);
-
-  box-shadow:
-
-  0 10px 30px
-
-  rgba(
-  0,
-  0,
-  0,
-  .2
-  );
-
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-size:35px;
+  background:linear-gradient(135deg,#8b5cf6,#06b6d4);
+  box-shadow:0 0 30px rgba(34,211,238,.55);
 }
 
-.header h1{
-
-  font-size:34px;
-
+h1{
+  font-size:35px;
   margin-bottom:8px;
-
 }
 
-.header p{
-
+.subtitle{
+  color:#cbd5e1;
   font-size:16px;
-
-  opacity:.9;
-
 }
 
-
-/* =========================
-   CALCULATOR BOX
-========================= */
-
-.calculator{
-
-  background:
-
-  rgba(
-  255,
-  255,
-  255,
-  .96
-  );
-
-  border-radius:28px;
-
-  padding:28px;
-
-  box-shadow:
-
-  0 25px 60px
-
-  rgba(
-  0,
-  0,
-  0,
-  .30
-  );
-
+.developer{
+  display:inline-block;
+  margin-top:13px;
+  padding:8px 17px;
+  border-radius:30px;
+  background:rgba(255,255,255,.12);
+  border:1px solid rgba(255,255,255,.2);
+  color:#67e8f9;
+  font-weight:bold;
 }
 
+.card{
+  background:rgba(255,255,255,.1);
+  border:1px solid rgba(255,255,255,.18);
+  backdrop-filter:blur(15px);
+  -webkit-backdrop-filter:blur(15px);
+  border-radius:25px;
+  padding:25px;
+  box-shadow:0 20px 60px rgba(0,0,0,.3);
+}
 
-/* =========================
-   SUBJECT GRID
-========================= */
+.notice{
+  background:rgba(34,211,238,.12);
+  border-left:4px solid #22d3ee;
+  padding:13px;
+  border-radius:10px;
+  margin-bottom:22px;
+  color:#e0f2fe;
+  font-size:14px;
+}
 
-.subject-grid{
-
+.subjects{
   display:grid;
-
-  grid-template-columns:
-
-  1fr 1fr;
-
-  gap:17px;
-
+  grid-template-columns:repeat(2,1fr);
+  gap:16px;
 }
-
-
-/* =========================
-   SUBJECT CARD
-========================= */
 
 .subject{
-
-  background:
-
-  linear-gradient(
-
-  135deg,
-
-  #f5f3ff,
-
-  #eff6ff
-
-  );
-
-  padding:17px;
-
-  border-radius:18px;
-
-  border:
-
-  2px solid
-
-  transparent;
-
+  background:rgba(15,23,42,.5);
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:16px;
+  padding:16px;
   transition:.3s;
-
 }
 
 .subject:hover{
-
-  transform:
-
-  translateY(-4px);
-
-  border-color:
-
-  #7c3aed;
-
-  box-shadow:
-
-  0 10px 25px
-
-  rgba(
-  124,
-  58,
-  237,
-  .18
-  );
-
+  transform:translateY(-3px);
+  border-color:#22d3ee;
 }
 
 .subject label{
-
   display:block;
-
-  font-size:16px;
-
-  font-weight:bold;
-
-  color:#312e81;
-
   margin-bottom:10px;
-
+  font-weight:bold;
+  color:#f8fafc;
 }
 
-.subject select{
-
+select{
   width:100%;
-
-  padding:12px;
-
+  padding:13px;
   border:none;
-
   outline:none;
-
-  border-radius:11px;
-
-  background:white;
-
-  color:#222;
-
+  border-radius:10px;
   font-size:16px;
-
+  background:#e2e8f0;
+  color:#0f172a;
   cursor:pointer;
-
-  box-shadow:
-
-  0 3px 10px
-
-  rgba(
-  0,
-  0,
-  0,
-  .08
-  );
-
 }
-
-
-/* =========================
-   OPTIONAL SUBJECT
-========================= */
 
 .optional{
-
-  grid-column:
-
-  1 / 3;
-
-  background:
-
-  linear-gradient(
-
-  135deg,
-
-  #fff7ed,
-
-  #fef3c7
-
-  );
-
-  border:
-
-  2px solid
-
-  #fbbf24;
-
+  grid-column:1/-1;
+  border:1px solid #fbbf24;
+  background:rgba(251,191,36,.1);
 }
 
 .optional label{
-
-  color:#92400e;
-
+  color:#fde68a;
 }
 
-
-/* =========================
-   BUTTON
-========================= */
+.buttons{
+  display:flex;
+  gap:15px;
+  margin-top:25px;
+}
 
 button{
-
-  width:100%;
-
-  margin-top:25px;
-
-  padding:17px;
-
+  flex:1;
+  padding:15px;
   border:none;
-
-  border-radius:16px;
-
-  color:white;
-
-  font-size:19px;
-
+  border-radius:13px;
+  font-size:17px;
   font-weight:bold;
-
   cursor:pointer;
-
-  background:
-
-  linear-gradient(
-
-  90deg,
-
-  #4f46e5,
-
-  #7c3aed,
-
-  #db2777
-
-  );
-
   transition:.3s;
-
 }
 
-button:hover{
-
-  transform:
-
-  scale(1.02);
-
-  box-shadow:
-
-  0 12px 30px
-
-  rgba(
-  124,
-  58,
-  237,
-  .45
-  );
-
+.calculate{
+  color:white;
+  background:linear-gradient(135deg,#7c3aed,#06b6d4);
+  box-shadow:0 8px 25px rgba(6,182,212,.3);
 }
 
-button:active{
-
-  transform:
-
-  scale(.98);
-
+.calculate:hover{
+  transform:translateY(-3px);
+  box-shadow:0 12px 30px rgba(6,182,212,.5);
 }
 
+.reset{
+  background:#334155;
+  color:white;
+}
 
-/* =========================
-   RESULT BOX
-========================= */
+.reset:hover{
+  background:#475569;
+}
 
 .result{
-
   display:none;
-
   margin-top:25px;
-
-  padding:25px;
-
   text-align:center;
-
+  padding:25px;
   border-radius:20px;
-
-  animation:
-
-  resultShow
-
-  .5s ease;
-
+  background:linear-gradient(135deg,rgba(34,197,94,.2),rgba(6,182,212,.2));
+  border:1px solid rgba(34,211,238,.4);
 }
 
 .result h2{
-
-  font-size:22px;
-
+  color:#a5f3fc;
   margin-bottom:10px;
-
 }
 
 .gpa{
-
   font-size:55px;
-
   font-weight:bold;
+  color:#fff;
+  text-shadow:0 0 20px #22d3ee;
+}
 
+.grade{
+  font-size:25px;
+  color:#fef08a;
+  margin-top:8px;
 }
 
 .message{
-
-  font-size:17px;
-
-  margin-top:8px;
-
+  margin-top:10px;
+  color:#e2e8f0;
 }
-
-.success{
-
-  color:#166534;
-
-  background:
-
-  linear-gradient(
-
-  135deg,
-
-  #dcfce7,
-
-  #bbf7d0
-
-  );
-
-}
-
-.fail{
-
-  color:#991b1b;
-
-  background:
-
-  linear-gradient(
-
-  135deg,
-
-  #fee2e2,
-
-  #fecaca
-
-  );
-
-}
-
-@keyframes resultShow{
-
-  from{
-
-  opacity:0;
-
-  transform:
-
-  translateY(20px);
-
-  }
-
-  to{
-
-  opacity:1;
-
-  transform:
-
-  translateY(0);
-
-  }
-
-}
-
-
-/* =========================
-   FOOTER
-========================= */
 
 .footer{
-
   text-align:center;
-
-  color:white;
-
-  margin-top:22px;
-
+  color:#94a3b8;
+  margin-top:25px;
   font-size:14px;
-
-  opacity:.9;
-
 }
 
+.footer b{
+  color:#67e8f9;
+}
 
-/* =========================
-   MOBILE DESIGN
-========================= */
+@media(max-width:600px){
+  h1{
+    font-size:27px;
+  }
 
-@media(
+  .card{
+    padding:17px;
+  }
 
-max-width:600px
-
-){
-
-  .subject-grid{
-
-  grid-template-columns:
-
-  1fr;
-
+  .subjects{
+    grid-template-columns:1fr;
   }
 
   .optional{
-
-  grid-column:
-
-  auto;
-
+    grid-column:auto;
   }
 
-  .header h1{
-
-  font-size:27px;
-
+  .buttons{
+    flex-direction:column;
   }
 
-  .calculator{
-
-  padding:18px;
-
+  .gpa{
+    font-size:48px;
   }
-
 }
-
 </style>
-
 </head>
 
 <body>
 
-
 <div class="container">
-
-
-<!-- DEVELOPER NAME -->
-
-<div class="developer">
-
-Developed by
-
-<span>
-
-Shajed Hasan
-
-</span>
-
-</div>
-
-
-<!-- HEADER -->
 
 <div class="header">
 
-<div class="icon">
+<div class="logo">🎓</div>
 
-🎓
+<h1>HSC GPA Calculator</h1>
 
-</div>
-
-<h1>
-
-HSC GPA Calculator
-
-</h1>
-
-<p>
-
-আপনার গ্রেড নির্বাচন করে GPA হিসাব করুন
-
+<p class="subtitle">
+Calculate your HSC GPA easily and instantly
 </p>
 
+<div class="developer">
+⚡ Developed by Shajed Hasan
 </div>
 
+</div>
 
-<!-- CALCULATOR -->
+<div class="card">
 
-<div class="calculator">
+<div class="notice">
+📌 ৬টি মূল বিষয় এবং ৪র্থ/ঐচ্ছিক বিষয় নির্বাচন করুন।
+৪র্থ বিষয়ের অতিরিক্ত GPA যোগ করে চূড়ান্ত GPA হিসাব করা হবে।
+</div>
 
-
-<div class="subject-grid">
-
-
-<!-- BANGLA -->
+<div class="subjects">
 
 <div class="subject">
-
-<label>
-
-📖 বাংলা
-
-</label>
-
-<select class="grade">
-
-<option value="5">
-
-A+ — 5.00
-
-</option>
-
-<option value="4">
-
-A — 4.00
-
-</option>
-
-<option value="3.5">
-
-A- — 3.50
-
-</option>
-
-<option value="3">
-
-B — 3.00
-
-</option>
-
-<option value="2">
-
-C — 2.00
-
-</option>
-
-<option value="1">
-
-D — 1.00
-
-</option>
-
-<option value="0">
-
-F — 0.00
-
-</option>
-
+<label>📘 Subject 1</label>
+<select class="gradeInput">
+<option value="">Select Grade</option>
+<option value="5">A+ (5.00)</option>
+<option value="4">A (4.00)</option>
+<option value="3.5">A- (3.50)</option>
+<option value="3">B (3.00)</option>
+<option value="2">C (2.00)</option>
+<option value="1">D (1.00)</option>
+<option value="0">F (0.00)</option>
 </select>
-
 </div>
-
-
-<!-- ENGLISH -->
 
 <div class="subject">
-
-<label>
-
-🌍 ইংরেজি
-
-</label>
-
-<select class="grade">
-
-<option value="5">
-
-A+ — 5.00
-
-</option>
-
-<option value="4">
-
-A — 4.00
-
-</option>
-
-<option value="3.5">
-
-A- — 3.50
-
-</option>
-
-<option value="3">
-
-B — 3.00
-
-</option>
-
-<option value="2">
-
-C — 2.00
-
-</option>
-
-<option value="1">
-
-D — 1.00
-
-</option>
-
-<option value="0">
-
-F — 0.00
-
-</option>
-
+<label>📗 Subject 2</label>
+<select class="gradeInput">
+<option value="">Select Grade</option>
+<option value="5">A+ (5.00)</option>
+<option value="4">A (4.00)</option>
+<option value="3.5">A- (3.50)</option>
+<option value="3">B (3.00)</option>
+<option value="2">C (2.00)</option>
+<option value="1">D (1.00)</option>
+<option value="0">F (0.00)</option>
 </select>
-
 </div>
-
-
-<!-- PHYSICS -->
 
 <div class="subject">
-
-<label>
-
-⚛️ পদার্থবিজ্ঞান
-
-</label>
-
-<select class="grade">
-
-<option value="5">
-
-A+ — 5.00
-
-</option>
-
-<option value="4">
-
-A — 4.00
-
-</option>
-
-<option value="3.5">
-
-A- — 3.50
-
-</option>
-
-<option value="3">
-
-B — 3.00
-
-</option>
-
-<option value="2">
-
-C — 2.00
-
-</option>
-
-<option value="1">
-
-D — 1.00
-
-</option>
-
-<option value="0">
-
-F — 0.00
-
-</option>
-
+<label>📕 Subject 3</label>
+<select class="gradeInput">
+<option value="">Select Grade</option>
+<option value="5">A+ (5.00)</option>
+<option value="4">A (4.00)</option>
+<option value="3.5">A- (3.50)</option>
+<option value="3">B (3.00)</option>
+<option value="2">C (2.00)</option>
+<option value="1">D (1.00)</option>
+<option value="0">F (0.00)</option>
 </select>
-
 </div>
-
-
-<!-- CHEMISTRY -->
 
 <div class="subject">
-
-<label>
-
-🧪 রসায়ন
-
-</label>
-
-<select class="grade">
-
-<option value="5">
-
-A+ — 5.00
-
-</option>
-
-<option value="4">
-
-A — 4.00
-
-</option>
-
-<option value="3.5">
-
-A- — 3.50
-
-</option>
-
-<option value="3">
-
-B — 3.00
-
-</option>
-
-<option value="2">
-
-C — 2.00
-
-</option>
-
-<option value="1">
-
-D — 1.00
-
-</option>
-
-<option value="0">
-
-F — 0.00
-
-</option>
-
+<label>📙 Subject 4</label>
+<select class="gradeInput">
+<option value="">Select Grade</option>
+<option value="5">A+ (5.00)</option>
+<option value="4">A (4.00)</option>
+<option value="3.5">A- (3.50)</option>
+<option value="3">B (3.00)</option>
+<option value="2">C (2.00)</option>
+<option value="1">D (1.00)</option>
+<option value="0">F (0.00)</option>
 </select>
-
 </div>
-
-
-<!-- MATH -->
 
 <div class="subject">
-
-<label>
-
-📐 উচ্চতর গণিত
-
-</label>
-
-<select class="grade">
-
-<option value="5">
-
-A+ — 5.00
-
-</option>
-
-<option value="4">
-
-A — 4.00
-
-</option>
-
-<option value="3.5">
-
-A- — 3.50
-
-</option>
-
-<option value="3">
-
-B — 3.00
-
-</option>
-
-<option value="2">
-
-C — 2.00
-
-</option>
-
-<option value="1">
-
-D — 1.00
-
-</option>
-
-<option value="0">
-
-F — 0.00
-
-</option>
-
+<label>📒 Subject 5</label>
+<select class="gradeInput">
+<option value="">Select Grade</option>
+<option value="5">A+ (5.00)</option>
+<option value="4">A (4.00)</option>
+<option value="3.5">A- (3.50)</option>
+<option value="3">B (3.00)</option>
+<option value="2">C (2.00)</option>
+<option value="1">D (1.00)</option>
+<option value="0">F (0.00)</option>
 </select>
-
 </div>
-
-
-<!-- BIOLOGY -->
 
 <div class="subject">
-
-<label>
-
-🧬 জীববিজ্ঞান
-
-</label>
-
-<select class="grade">
-
-<option value="5">
-
-A+ — 5.00
-
-</option>
-
-<option value="4">
-
-A — 4.00
-
-</option>
-
-<option value="3.5">
-
-A- — 3.50
-
-</option>
-
-<option value="3">
-
-B — 3.00
-
-</option>
-
-<option value="2">
-
-C — 2.00
-
-</option>
-
-<option value="1">
-
-D — 1.00
-
-</option>
-
-<option value="0">
-
-F — 0.00
-
-</option>
-
+<label>📔 Subject 6</label>
+<select class="gradeInput">
+<option value="">Select Grade</option>
+<option value="5">A+ (5.00)</option>
+<option value="4">A (4.00)</option>
+<option value="3.5">A- (3.50)</option>
+<option value="3">B (3.00)</option>
+<option value="2">C (2.00)</option>
+<option value="1">D (1.00)</option>
+<option value="0">F (0.00)</option>
 </select>
-
 </div>
-
-
-<!-- OPTIONAL SUBJECT -->
 
 <div class="subject optional">
-
-<label>
-
-⭐ ৪র্থ বিষয় / ঐচ্ছিক বিষয়
-
-</label>
-
+<label>⭐ 4th / Optional Subject</label>
 <select id="optionalGrade">
-
-<option value="5">
-
-A+ — 5.00
-
-</option>
-
-<option value="4">
-
-A — 4.00
-
-</option>
-
-<option value="3.5">
-
-A- — 3.50
-
-</option>
-
-<option value="3">
-
-B — 3.00
-
-</option>
-
-<option value="2">
-
-C — 2.00
-
-</option>
-
-<option value="1">
-
-D — 1.00
-
-</option>
-
-<option value="0">
-
-F — 0.00
-
-</option>
-
+<option value="">Select Optional Grade</option>
+<option value="5">A+ (5.00)</option>
+<option value="4">A (4.00)</option>
+<option value="3.5">A- (3.50)</option>
+<option value="3">B (3.00)</option>
+<option value="2">C (2.00)</option>
+<option value="1">D (1.00)</option>
+<option value="0">F (0.00)</option>
 </select>
+</div>
 
 </div>
 
+<div class="buttons">
 
-</div>
-
-
-<!-- BUTTON -->
-
-<button onclick="calculateGPA()">
-
-✨ GPA CALCULATE করুন
-
+<button class="calculate" onclick="calculateGPA()">
+✨ Calculate GPA
 </button>
 
-
-<!-- RESULT -->
-
-<div
-
-id="result"
-
-class="result"
-
->
-
-<h2>
-
-আপনার GPA
-
-</h2>
-
-<div
-
-id="gpa"
-
-class="gpa"
-
->
+<button class="reset" onclick="resetCalculator()">
+🔄 Reset
+</button>
 
 </div>
 
-<p
+<div class="result" id="result">
 
-id="message"
+<h2>🎉 Your Final Result</h2>
 
-class="message"
+<div class="gpa" id="gpaResult">
+0.00
+</div>
 
->
+<div class="grade" id="gradeResult">
+Grade
+</div>
 
+<p class="message" id="message">
+Select your grades and calculate
 </p>
 
 </div>
 
-
 </div>
-
-
-<!-- FOOTER -->
 
 <div class="footer">
 
-© 2026 HSC GPA Calculator
+© 2026 HSC GPA Calculator<br>
 
-<br>
-
-Developed by Shajed Hasan
-
-</div>
-
+Designed & Developed by
+<b>Shajed Hasan</b>
 
 </div>
 
+</div>
 
 <script>
 
-
 function calculateGPA(){
 
-
-let grades =
-
-document.querySelectorAll(
-
-".grade"
-
-);
-
-
-let optionalGrade =
-
-Number(
-
-document.getElementById(
-
-"optionalGrade"
-
-).value
-
-);
-
+let subjects =
+document.querySelectorAll(".gradeInput");
 
 let total = 0;
 
+for(let subject of subjects){
 
-let result =
+if(subject.value === ""){
 
-document.getElementById(
-
-"result"
-
-);
-
-
-let gpaText =
-
-document.getElementById(
-
-"gpa"
-
-);
-
-
-let message =
-
-document.getElementById(
-
-"message"
-
-);
-
-
-/* CHECK MAIN SUBJECT */
-
-
-for(
-
-let i = 0;
-
-i < grades.length;
-
-i++
-
-){
-
-
-let value =
-
-Number(
-
-grades[i].value
-
-);
-
-
-/* MAIN SUBJECT F */
-
-
-if(
-
-value === 0
-
-){
-
-
-result.style.display =
-
-"block";
-
-
-result.className =
-
-"result fail";
-
-
-gpaText.innerHTML =
-
-"F ❌";
-
-
-message.innerHTML =
-
-"মূল বিষয়ে F আছে";
+alert("Please select all 6 subject grades!");
 
 return;
 
 }
 
+if(Number(subject.value) === 0){
 
-total += value;
+showResult(
+"0.00",
+"F",
+"❌ You have failed in at least one subject."
+);
 
+return;
 
 }
 
+total += Number(subject.value);
 
-/* OPTIONAL BONUS */
+}
 
+let optional =
+document.getElementById("optionalGrade");
 
-let optionalBonus =
+if(optional.value === ""){
 
-Math.max(
+alert("Please select your 4th/Optional subject!");
 
-0,
+return;
 
-optionalGrade - 2
+}
 
-);
+let optionalPoint =
+Number(optional.value);
 
+let extra = optionalPoint - 2;
 
-/* FINAL GPA */
+if(extra < 0){
 
+extra = 0;
+
+}
 
 let gpa =
+(total + extra) / 6;
 
-(
-
-total +
-
-optionalBonus
-
-)
-
-/
-
-grades.length;
-
-
-/* MAX GPA 5 */
-
-
-if(
-
-gpa > 5
-
-){
+if(gpa > 5){
 
 gpa = 5;
 
 }
 
+let grade = "";
 
-/* SHOW RESULT */
+let message = "";
 
+if(gpa === 5){
 
-result.style.display =
+grade = "A+";
 
-"block";
-
-
-result.className =
-
-"result success";
-
-
-gpaText.innerHTML =
-
-gpa.toFixed(2);
-
-
-/* RESULT MESSAGE */
-
-
-if(
-
-gpa === 5
-
-){
-
-message.innerHTML =
-
-"🎉 অসাধারণ! আপনি GPA 5.00 পেয়েছেন";
+message =
+"🏆 Outstanding! Excellent result!";
 
 }
 
+else if(gpa >= 4){
 
-else if(
+grade = "A";
 
-gpa >= 4
-
-){
-
-message.innerHTML =
-
-"🌟 খুব ভালো ফলাফল!";
+message =
+"🎉 Very ভালো! Keep it up!";
 
 }
 
+else if(gpa >= 3.5){
 
-else if(
+grade = "A-";
 
-gpa >= 3
-
-){
-
-message.innerHTML =
-
-"👏 ভালো করেছেন!";
+message =
+"👏 Great result!";
 
 }
 
+else if(gpa >= 3){
+
+grade = "B";
+
+message =
+"👍 Good result!";
+
+}
+
+else if(gpa >= 2){
+
+grade = "C";
+
+message =
+"🙂 You passed successfully.";
+
+}
 
 else{
 
-message.innerHTML =
+grade = "D";
 
-"📚 আরও চেষ্টা করলে ভালো হবে";
-
-}
-
+message =
+"📚 Keep improving!";
 
 }
 
+showResult(
+
+gpa.toFixed(2),
+
+grade,
+
+message
+
+);
+
+}
+
+function showResult(
+
+gpa,
+
+grade,
+
+message
+
+){
+
+document
+.getElementById("result")
+.style.display="block";
+
+document
+.getElementById("gpaResult")
+.innerText=gpa;
+
+document
+.getElementById("gradeResult")
+.innerText="Grade: "+grade;
+
+document
+.getElementById("message")
+.innerText=message;
+
+document
+.getElementById("result")
+.scrollIntoView({
+
+behavior:"smooth",
+
+block:"center"
+
+});
+
+}
+
+function resetCalculator(){
+
+let inputs =
+document.querySelectorAll("select");
+
+for(let input of inputs){
+
+input.value="";
+
+}
+
+document
+.getElementById("result")
+.style.display="none";
+
+}
 
 </script>
 
-
 </body>
-
 </html>
